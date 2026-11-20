@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matar Voniane — Réseaux & Cybersécurité</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #070b14;
+            --bg-card: rgba(17, 25, 40, 0.75);
+            --bg-card-hover: rgba(26, 38, 60, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-accent: rgba(56, 189, 248, 0.4);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #38bdf8;
+            --accent-emerald: #10b981;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(16, 185, 129, 0.06) 0%, transparent 40%);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(12px);
+            background: rgba(7, 11, 20, 0.8);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--accent-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        
+        .hero {
+            padding: 6rem 0 4rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.9rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-emerald);
+            margin-bottom: 1.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-emerald);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 4vw, 3.4rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.2rem;
+        }
+
+             /* Titre : Dégradé fluide animé + Effet Glitch Cyber */
+        h1 .gradient-text {
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(90deg, #38bdf8, #10b981, #818cf8, #38bdf8);
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientFlow 5s linear infinite;
+            cursor: default;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% center; }
+            100% { background-position: 250% center; }
+        }
+
+        h1 .gradient-text.glitch-active {
+            animation: gradientFlow 5s linear infinite, cyberGlitch 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        }
+
+        @keyframes cyberGlitch {
+            0% { transform: translate(0); text-shadow: none; }
+            20% { transform: translate(-3px, 1px); text-shadow: 2px 0 #38bdf8, -2px 0 #10b981; }
+            40% { transform: translate(3px, -1px); text-shadow: -2px 0 #ef4444, 2px 0 #38bdf8; }
+            60% { transform: translate(-2px, -1px); text-shadow: 2px 0 #10b981, -2px 0 #38bdf8; }
+            80% { transform: translate(2px, 1px); text-shadow: -1px 0 #38bdf8, 1px 0 #10b981; }
+            100% { transform: translate(0); text-shadow: none; }
+        }
+
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            max-width: 560px;
+        }
+
+        .cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.4rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-cyan);
+            color: #070b14;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: #7dd3fc;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+            background: var(--bg-card-hover);
+        }
+
+    
+        .terminal-window {
+            background: #0d1322;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        .terminal-header {
+            background: #151e32;
+            padding: 0.7rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dot { width: 11px; height: 11px; border-radius: 50%; }
+        .dot.red { background: #ef4444; }
+        .dot.yellow { background: #f59e0b; }
+        .dot.green { background: #10b981; }
+
+        .terminal-title {
+            margin-left: auto;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .terminal-body {
+            padding: 1.25rem;
+            color: #cbd5e1;
+        }
+
+        .cmd { color: var(--accent-emerald); }
+        .out-key { color: var(--accent-cyan); }
+        .terminal-line { margin-bottom: 0.6rem; }
+
+        
+        section {
+            padding: 4.5rem 0;
+        }
+
+        .section-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-tag {
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        h2 {
+            font-size: 1.85rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+       
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-3px);
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 0.35rem 0.7rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #e2e8f0;
+        }
+
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-type {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-emerald);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+
+        .project-links a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-family: var(--font-mono);
+	}
+	        .project-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Formation & Certifications */
+        .timeline {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.1);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+        }
+
+        /* Contact */
+        .contact-box {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .contact-box p {
+            color: var(--text-secondary);
+            margin: 1rem 0 2rem;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+        }
+
+        @media (max-width: 850px) {
+            .hero { grid-template-columns: 1fr; padding-top: 3.5rem; }
+            .nav-links { display: none; }
+        }
+	        /* Aperçus et liens Certifications */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .cert-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .cert-preview {
+            width: 100%;
+            height: 170px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: #0d1322;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+                .cert-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cert-card:hover .cert-preview img {
+            transform: scale(1.03);
+        }
+
+        .cert-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-decoration: none;
+            margin-top: 0.5rem;
+        }
+
+        .cert-link:hover {
+            text-decoration: underline;
+        }
+	        /* Encart spécial Diamond League */
+        .achievement-banner {
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .diamond-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+            margin-bottom: 0.75rem;
+        }
+
+        .achievement-proof {
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: #0d1322;
+        }
+
+        .achievement-proof img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 750px) {
+            .achievement-banner { grid-template-columns: 1fr; }
+        }
+
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
+            z-index: 9999;
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+
+        #network-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+
+        body::before {
+            animation: gridMove 25s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.12), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px -10px rgba(56, 189, 248, 0.25);
+        }
+
+      
+        .tag {
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+     
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px) scale(0.98);
+            transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+      
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background-color: var(--accent-emerald);
+            vertical-align: middle;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+                /* Arsenal Spécialisé : Ruban cinétique infini */
+        .arsenal-section {
+            padding: 3.5rem 0 1.5rem;
+            overflow: hidden;
+        }
+
+        .marquee-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            /* Fondu progressif sur les bords gauche et droit */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 1rem;
+            width: max-content;
+            animation: scrollLeft 28s linear infinite;
+        }
+
+        .marquee-track.reverse {
+            animation: scrollRight 32s linear infinite;
+        }
+
+        .marquee-wrapper:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes scrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .arsenal-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(17, 25, 40, 0.85);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            white-space: nowrap;
+            transition: all 0.25s ease;
+        }
+
+        .arsenal-item:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .arsenal-cat {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent-emerald);
+            text-transform: uppercase;
+        }
+
+        .arsenal-tool {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+
+    </style>
+</head>
+<body>
+	    <div id="scroll-progress"></div>
+ 	   <canvas id="network-canvas"></canvas>
+
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo"><span>~/</span>RawSocket</a>
+                <ul class="nav-links">
+                    <li><a href="#competences">Compétences</a></li>
+                    <li><a href="#projets">Projets & Labs</a></li>
+                    <li><a href="#parcours">Parcours</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div>
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    Disponible pour stage — Dakar / Sénégal
+                </div>
+                <h1>Matar Voniane<br><span class="gradient-text">Réseaux & Cybersécurité</span></h1>
+                <p>
+                    Étudiant passionné par l'architecture des réseaux, l'administration système Linux et la sécurité. Je conçois, sécurise et audite des infrastructures connectées.
+                </p>
+                <div class="cta-group">
+                    <a href="#projets" class="btn btn-primary">Voir mes projets</a>
+                    <a href="CV.pdf" target="_blank" class="btn btn-secondary">Télécharger mon CV</a>
+                </div>
+            </div>
+
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="terminal-title">bash — profil.sh</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line"><span class="cmd">$</span> whoami</div>
+                    <div class="terminal-line">Etudiant en L3 Informatique Réseaux & Sécurité</div>
+                    <div class="terminal-line"><span class="cmd">$</span> cat focus.txt</div>
+                    <div class="terminal-line"><span class="out-key">Réseaux :</span> Routage, VLAN, VPN, BGP</div>
+                    <div class="terminal-line"><span class="out-key">Sécurité :</span> Hardening, Audit, SIEM, WAF</div>
+                    <div class="terminal-line"><span class="out-key">DevOps & Auto :</span> Docker, Ansible, Netmiko, Cloudflare</div>
+                    <div class="terminal-line"><span class="cmd">$</span> status --internship</div>
+                    <div class="terminal-line" style="color: #10b981;">[OK] Prêt à intégrer une équipe IT/Sec</div>
+                    <div class="terminal-line"><span class="out-key">Code & Web :</span> C/C++ (Qt), Python, Bash, PHP/MySQL, JS, HTML/CSS</div>
+
+                </div>
+            </div>
+        </section>
+
+              <section id="competences">
+            <div class="section-header">
+                <span class="section-tag">01 // Stack Technique</span>
+                <h2>Compétences & Outils</h2>
+            </div>
+            <div class="skills-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));">
+                 <div class="card">
+                    <h3>🌐 Réseaux & Automatisation (NetDevOps)</h3>
+                    <div class="tags">
+                        <span class="tag">TCP/IP & Modèle OSI</span>
+                        <span class="tag">VLAN / VTP / STP</span>
+                        <span class="tag">OSPF / HSRP / BGP</span>
+                        <span class="tag">Netmiko (Python)</span>
+                        <span class="tag">Ansible</span>
+                        <span class="tag">VPN / DNS / DHCP</span>
+                        <span class="tag">Packet Tracer & GNS3</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🛡️ Cybersécurité, Systèmes & DevOps</h3>
+                    <div class="tags">
+                        <span class="tag">Linux (Debian / Ubuntu)</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">Windows Server / AD</span>
+                        <span class="tag">Nmap & Wireshark</span>
+                        <span class="tag">UFW / pfSense / iptables</span>
+                        <span class="tag">Fail2ban & SSH Hardening</span>
+                        <span class="tag">Cloudflare WAF</span>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <h3>💻 Programmation & Scripting</h3>
+                    <div class="tags">
+                        <span class="tag">Python (Flask / Sockets)</span>
+                        <span class="tag">C</span>
+                        <span class="tag">C++</span>
+                        <span class="tag">Qt Framework (GUI)</span>
+                        <span class="tag">Bash Scripting</span>
+                        <span class="tag">Git & GitHub</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🌍 Développement Web & Données</h3>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">PHP</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Sécurité Web (OWASP)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="projets">
+            <div class="section-header">
+                <span class="section-tag">02 // Réalisations</span>
+                <h2>Projets & Labs Pratiques</h2>
+            </div>
+            <div class="projects-grid">
+                               <article class="card project-card">
+                    <div>
+                        <div class="project-type">OUTILS RÉSEAU & SCRIPTING</div>
+                        <h3>Suite d'Outils Réseau en Python (CLI)</h3>
+                        <p>Développement d'utilitaires réseau bas niveau : transfert de fichiers P2P via sockets TCP (PhantomRawSocket) et découverte d'hôtes locaux via scanner ARP.</p>
+                        <div class="tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Sockets TCP/IP</span>
+                            <span class="tag">ARP / Scapy</span>
+                            <span class="tag">Linux CLI</span>
+                        </div>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com[votre-github]/python-network-tools" target="_blank">Code GitHub →</a>
+                    </div>
+                </article>
+
+
+                               <article class="card project-card">
+                    <div>
+                        <div class="project-type">ARCHITECTURE RÉSEAU & HAUTE DISPONIBILITÉ</div>
+                        <h3>Infrastructure Multi-Sites HSRP, OSPF & WLC</h3>
+                        <p>Déploiement d'un réseau complet sous Packet Tracer : routage dynamique OSPF, redondance de passerelle HSRP, gestion VLAN via VTP, DHCP et Wi-Fi centralisé.</p>
+                        <div class="tags">
+                            <span class="tag">Cisco IOS</span>
+                            <span class="tag">OSPF</span>
+                            <span class="tag">BGP</span>
+                            <span class="tag">HSRP</span>
+                            <span class="tag">VTP / VLAN</span>
+                            <span class="tag">WLC</span>
+                            <span class="tag">Cell Tower</span>
+                        </div>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/jokerkillua6/architecture-reseau-hsrp-ospf" target="_blank">Documentation Lab →</a>
+                    </div>
+                </article>
+
+
+                <article class="card project-card">
+                    <div>
+                        <div class="project-type">SÉCURITÉ DÉFENSIVE</div>
+                        <h3>Durcissement d'un Serveur Linux</h3>
+                        <p>Mise en place d'un serveur Debian sécurisé : configuration SSH par clés, pare-feu UFW, protection anti-brute-force Fail2ban et audit Lynis.</p>
+                        <div class="tags">
+                            <span class="tag">Debian</span>
+                            <span class="tag">SSH</span>
+                            <span class="tag">Fail2ban</span>
+                            <span class="tag">UFW</span>
+                        </div>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/jokerkillua6/linux-server-hardening/" target="_blank">Guide technique →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+                <section id="parcours">
+            <div class="section-header">
+                <span class="section-tag">03 // Académique & Labs</span>
+                <h2>Formation & Certifications</h2>
+            </div>
+
+            <div class="timeline">
+                <div class="card timeline-item">
+                    <div>
+                        <h3>Licence 3 Informatique option Réseaux & Sécurité</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">[Nom de votre école / université], Dakar</p>
+                    </div>
+                    <span class="timeline-date">2024 — Présent</span>
+                </div>
+            </div>
+
+            <div class="cert-grid">
+                <!-- Carte Profil TryHackMe -->
+                <div class="card cert-card">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                            <span class="project-type" style="margin: 0;">PLATEFORME CYBER</span>
+                            <span class="timeline-date">Actif</span>
+                        </div>
+                        <div class="cert-preview">
+                            <!-- Remplacez par "tryhackme.png" (capture locale) ou l'URL dynamique TryHackMe -->
+                            <img src="IMAGES/apercu_tryhackme.png" alt="Aperçu profil TryHackMe">
+                        </div>
+                        <h3 style="margin-top: 1rem;">Profil & Labs TryHackMe</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Résolution de challenges pratiques : Linux Fundamentals, Network Services, Nmap et analyse de vulnérabilités.
+                        </p>
+                    </div>
+                    <a href="https://tryhackme.com/p/R4wSockeT?utm_campaign=social_share&utm_medium=social&utm_content=profile&cardVersion=1be808b8d116&utm_source=copy&share_date=2026-11-20&sharerId=683ec3c05d8790abebe13846" target="_blank" class="cert-link">
+                        Accéder à mon profil TryHackMe →
+                    </a>
+                </div>
+
+                                <!-- Carte Cisco Networking Academy -->
+                <div class="card cert-card">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                            <span class="project-type" style="margin: 0;">CERTIFICATION RÉSEAU</span>
+                            <span class="timeline-date">Certifié</span>
+                        </div>
+                        <div class="cert-preview">
+                            <img src="IMAGES/apercu_certif_netacad.png" alt="Certificat Cisco Network Technician">
+                        </div>
+                        <h3 style="margin-top: 1rem;">Cisco — Network Technician Career Path</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Configuration de routeurs et commutateurs, adressage IPv4/IPv6, dépannage réseau et sécurité des équipements.
+                        </p>
+                    </div>
+                    <a href="PDF/Network_Technician_Career_Path_certificate_matarvoniane1516-gmail-com_433677be-15bc-4ad4-9465-07704240fd1f.pdf" target="_blank" class="cert-link">
+                        Voir le certificat officiel (PDF) →
+                    </a>
+                </div>
+
+        </section>
+	                     
+            <div class="card" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+                <div style="flex: 1; min-width: 280px;">
+                    <span class="project-type" style="margin-bottom: 0.25rem; display: block;">AUTHENTIFICATION & BADGES</span>
+                    <h3 style="margin-bottom: 0.4rem;">Vérifier mes certifications en ligne</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.25rem;">
+                        Consultez l'authenticité de mes parcours et badges numériques officiels.
+                    </p>
+                    <div class="cta-group">
+                        <a href="https://www.credly.com/users/matar-voniane" target="_blank" class="btn btn-secondary">
+                            Badges Credly →
+                        </a>
+                        <a href="https://credly.com" target="_blank" class="btn btn-secondary">
+                            Vérification Network Technician →
+                        </a>
+                    </div>
+                </div>
+
+               
+                <div style="flex-shrink: 0; background: #0d1322; border: 1px solid var(--border-color); border-radius: 10px; padding: 0.75rem; display: flex; align-items: center; justify-content: center;">
+                    <img src="IMAGES/network-technician-career-path.png" alt="Badge Cisco Network Technician" style="width: 115px; height: 115px; object-fit: contain;">
+                </div>
+            </div>
+        </section>
+
+
+	        <section class="arsenal-section">
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 1.75rem;">
+                    <span class="section-tag">04 // Arsenal Opérationnel</span>
+                    <h2>Outils Spécialisés & Investigation</h2>
+                </div>
+            </div>
+
+            <div class="marquee-wrapper">
+                <!-- Ligne 1 : Analyse réseau, Logs & Web Pentest -->
+                <div class="marquee-track">
+                    <div class="arsenal-item"><span class="arsenal-cat">Log Analysis & SIEM</span><span class="arsenal-tool">Splunk</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Packet Inspection</span><span class="arsenal-tool">Wireshark</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Network Recon</span><span class="arsenal-tool">Nmap</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Web App Security</span><span class="arsenal-tool">Burp Suite</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Traffic Capture</span><span class="arsenal-tool">tcpdump</span></div>
+                    <!-- Duplication pour boucle infinie fluide -->
+                    <div class="arsenal-item"><span class="arsenal-cat">Log Analysis & SIEM</span><span class="arsenal-tool">Splunk</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Packet Inspection</span><span class="arsenal-tool">Wireshark</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Network Recon</span><span class="arsenal-tool">Nmap</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Web App Security</span><span class="arsenal-tool">Burp Suite</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Traffic Capture</span><span class="arsenal-tool">tcpdump</span></div>
+                </div>
+
+                <!-- Ligne 2 (sens inverse) : Forensics & Cryptographie -->
+                <div class="marquee-track reverse">
+                    <div class="arsenal-item"><span class="arsenal-cat">Memory Forensics</span><span class="arsenal-tool">Volatility</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Cryptographie TLS/PKI</span><span class="arsenal-tool">OpenSSL</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Chiffrement & Signatures</span><span class="arsenal-tool">GPG (GnuPG)</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Intrusion Prevention</span><span class="arsenal-tool">Fail2ban & UFW</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Audit & Scanning</span><span class="arsenal-tool">Netcat / Nikto</span></div>
+                    <!-- Duplication pour boucle infinie fluide -->
+                    <div class="arsenal-item"><span class="arsenal-cat">Memory Forensics</span><span class="arsenal-tool">Volatility</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Cryptographie TLS/PKI</span><span class="arsenal-tool">OpenSSL</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Chiffrement & Signatures</span><span class="arsenal-tool">GPG (GnuPG)</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Intrusion Prevention</span><span class="arsenal-tool">Fail2ban & UFW</span></div>
+                    <div class="arsenal-item"><span class="arsenal-cat">Audit & Scanning</span><span class="arsenal-tool">Netcat / Nikto</span></div>
+                </div>
+            </div>
+        </section>
+
+	
+
+        <section id="contact">
+            <div class="card contact-box">
+                <span class="section-tag"> Connexion</span>
+                <h2>Travaillons ensemble</h2>
+                <p>Vous recherchez un stagiaire motivé en réseaux, systèmes ou cybersécurité ? N'hésitez pas à me contacter par e-mail ou sur LinkedIn.</p>
+                <div class="cta-group" style="justify-content: center;">
+                    <button class="btn btn-primary" onclick="copyEmail()">Copier mon e-mail</button>
+                    <a href="https://www.linkedin.com/in/matar-m-868222403" target="_blank" class="btn btn-secondary">LinkedIn</a>
+                    <a href="https://github.com/jokerkillua6" target="_blank" class="btn btn-secondary">GitHub</a>
+                </div>
+                <p id="copy-msg" style="color: var(--accent-emerald); font-family: var(--font-mono); font-size: 0.85rem; margin-top: 1rem; display: none;">
+                    ✓ Adresse mail : matarvoniane1516@gmail.com
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            Conçu & sécurisé par Matar Voniane • Hébergé sur Cloudflare Pages
+        </div>
+    </footer>
+
+       <script>
+        function copyEmail() {
+            const email = "[votre.email@exemple.com]";
+            navigator.clipboard.writeText(email);
+            const msg = document.getElementById("copy-msg");
+            msg.style.display = "block";
+            setTimeout(() => { msg.style.display = "none"; }, 3000);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Barre de progression au défilement
+            window.addEventListener("scroll", () => {
+                const winScroll = document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("scroll-progress").style.width = scrolled + "%";
+            });
+
+            // 2. Effet Spotlight (lumière qui suit la souris sur les cartes)
+            document.querySelectorAll(".card").forEach(card => {
+                card.addEventListener("mousemove", e => {
+                    const rect = card.getBoundingClientRect();
+                    card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+                    card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+                });
+            });
+
+            // 3. Apparition fluide au scroll
+            const elements = document.querySelectorAll(".card, .section-header, .terminal-window");
+            elements.forEach(el => el.classList.add("reveal"));
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => entry.target.classList.add("visible"), i * 70);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            elements.forEach(el => observer.observe(el));
+
+            // 4. Effet Glitch Cyber sur le titre au chargement et au survol
+            const titleGradient = document.querySelector("h1 .gradient-text");
+            if (titleGradient) {
+                const triggerGlitch = () => {
+                    titleGradient.classList.remove("glitch-active");
+                    void titleGradient.offsetWidth; // Force le redémarrage de l'animation
+                    titleGradient.classList.add("glitch-active");
+                };
+                setTimeout(triggerGlitch, 300);
+                titleGradient.addEventListener("mouseenter", triggerGlitch);
+            }
+
+            // 5. Simulation complète et séquentielle du Terminal Bash
+            const terminalBody = document.querySelector(".terminal-body");
+            if (terminalBody) {
+                const lines = Array.from(terminalBody.querySelectorAll(".terminal-line"));
+                const savedLines = lines.map(line => ({
+                    html: line.innerHTML,
+                    text: line.textContent.trim(),
+                    isCmd: line.querySelector(".cmd") !== null
+                }));
+
+                // Vide le terminal au départ
+                terminalBody.innerHTML = "";
+                const cursor = document.createElement("span");
+                cursor.className = "cursor";
+
+                const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+                async function runTerminal() {
+                    await sleep(400);
+                    for (let i = 0; i < savedLines.length; i++) {
+                        const item = savedLines[i];
+                        const lineEl = document.createElement("div");
+                        lineEl.className = "terminal-line";
+                        terminalBody.appendChild(lineEl);
+
+                        if (item.isCmd) {
+                            // Affiche le "$" en vert puis tape la commande lettre par lettre
+                            const promptSpan = document.createElement("span");
+                            promptSpan.className = "cmd";
+                            promptSpan.textContent = "$ ";
+                            lineEl.appendChild(promptSpan);
+                            lineEl.appendChild(cursor);
+
+                            const commandText = item.text.replace(/^\$\s*/, "");
+                            for (let char of commandText) {
+                                lineEl.insertBefore(document.createTextNode(char), cursor);
+                                await sleep(55); // Vitesse de frappe humaine
+                            }
+                            await sleep(300); // Petite pause avant exécution
+                        } else {
+                            // Affiche la sortie de la commande
+                            if (i === savedLines.length - 1) {
+                                lineEl.style.color = "#10b981";
+                            }
+                            lineEl.innerHTML = item.html;
+                            lineEl.appendChild(cursor);
+                            await sleep(220);
+                        }
+                    }
+                }
+                runTerminal();
+            }
+
+            // 6. Réseau de nœuds connectés interactif (Canvas)
+            const canvas = document.getElementById("network-canvas");
+            const ctx = canvas.getContext("2d");
+            let width, height, particles = [];
+            const mouse = { x: null, y: null };
+
+            window.addEventListener("mousemove", e => { mouse.x = e.x; mouse.y = e.y; });
+            window.addEventListener("mouseout", () => { mouse.x = null; mouse.y = null; });
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener("resize", resize);
+            resize();
+
+            const count = Math.min(55, Math.floor((width * height) / 22000));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    r: Math.random() * 1.8 + 1
+                });
+            }
+
+            function animateNetwork() {
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(56, 189, 248, 0.45)";
+                    ctx.fill();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                        if (dist < 130) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 130)})`;
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+                        }
+                    }
+
+                    if (mouse.x !== null) {
+                        const mDist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+                        if (mDist < 160) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.strokeStyle = `rgba(16, 185, 129, ${0.35 * (1 - mDist / 160)})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateNetwork);
+            }
+            animateNetwork();
+        });
+    </script>
+
+</body>
+</html>
+
