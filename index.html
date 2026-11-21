@@ -708,6 +708,124 @@
         }
 
 
+                /* Bannière Animée : Coffre-Fort Write-ups TryHackMe */
+        @property --border-angle {
+            syntax: "<angle>";
+            inherits: true;
+            initial-value: 0deg;
+        }
+
+        .writeup-vault {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding: 1.6rem 2rem;
+            margin-bottom: 2.25rem;
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--text-primary);
+            /* Bordure laser rotative à 360° */
+            background: 
+                linear-gradient(#0b1120, #0b1120) padding-box,
+                conic-gradient(from var(--border-angle), transparent 25%, #38bdf8 50%, #10b981 75%, transparent 100%) border-box;
+            border: 2px solid transparent;
+            box-shadow: 0 10px 35px -10px rgba(56, 189, 248, 0.25);
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+            animation: spinBorder 4s linear infinite;
+        }
+
+        @keyframes spinBorder {
+            to { --border-angle: 360deg; }
+        }
+
+        /* Faisceau laser de scan horizontal continu */
+        .writeup-vault::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -40%;
+            width: 35%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.14), rgba(56, 189, 248, 0.18), transparent);
+            transform: skewX(-20deg);
+            animation: laserSweep 3.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes laserSweep {
+            0% { left: -40%; }
+            60%, 100% { left: 130%; }
+        }
+
+        .writeup-vault:hover {
+            transform: translateY(-4px) scale(1.005);
+            box-shadow: 0 15px 45px -8px rgba(16, 185, 129, 0.35);
+            animation-duration: 1.8s; /* Accélère la rotation au survol */
+        }
+
+        .vault-left {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            z-index: 2;
+        }
+
+        .vault-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--accent-emerald);
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.25);
+            flex-shrink: 0;
+        }
+
+        .vault-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-emerald);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .vault-cta {
+            z-index: 2;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 0.65rem 1.2rem;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: var(--accent-cyan);
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .writeup-vault:hover .vault-cta {
+            background: var(--accent-cyan);
+            color: #070b14;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -833,6 +951,27 @@
                 <span class="section-tag">02 // Réalisations</span>
                 <h2>Projets & Labs Pratiques</h2>
             </div>
+                        <!-- Bannière Spéciale Write-ups TryHackMe -->
+            <a href="https://github.com/jokerkillua6/THM_WRITEUP" target="_blank" class="writeup-vault">
+                <div class="vault-left">
+                    <div class="vault-icon">[#_]</div>
+                    <div>
+                        <div class="vault-badge">
+                            <span class="status-dot"></span>
+                            DOSSIERS CLASSIFIÉS // TRYHACKME & CTF
+                        </div>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.2rem;">Base de Connaissances & Write-ups TryHackMe</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">
+                            Rapports complets d'exploitation, méthodologies d'énumération, élévation de privilèges et remédiations.
+                        </p>
+                    </div>
+                </div>
+                <div class="vault-cta">
+                    Accéder au Vault GitHub →
+                </div>
+            </a>
+
+
             <div class="projects-grid">
                                <article class="card project-card">
                     <div>
